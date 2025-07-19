@@ -1,4 +1,4 @@
-# Utilitaires C – Lecture/Écriture et Manipulation de Chaînes
+# Utilitaires C – Lecture/Écriture et Manipulation de Chaînes de charactère
 
 ## Description
 Ce projet regroupe plusieurs petits programmes en C destinés à illustrer la lecture et l’écriture de fichiers, ainsi que des fonctions de manipulation de chaînes.
