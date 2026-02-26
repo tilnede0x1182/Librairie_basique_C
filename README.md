@@ -1,8 +1,8 @@
-# Utilitaires C - Fichiers et Chaines
+# Utilitaires C - Fichiers et Chaînes
 
 ## Description
 
-Bibliotheque d'utilitaires en C pour la gestion de fichiers et la manipulation de chaines de caracteres. Le module io_utils fournit des fonctions d'ouverture/fermeture de fichiers et de recuperation d'arguments CLI. Le module util_string propose des fonctions de calcul de longueur, affichage, concatenation et extraction de sous-chaines. Chaque fonction inclut une gestion d'erreurs et utilise l'allocation dynamique.
+Bibliothèque d'utilitaires en C pour la gestion de fichiers et la manipulation de chaînes de caractères. Le module io_utils fournit des fonctions d'ouverture/fermeture de fichiers et de récupération d'arguments CLI. Le module util_string propose des fonctions de calcul de longueur, affichage, concaténation et extraction de sous-chaînes. Chaque fonction inclut une gestion d'erreurs et utilise l'allocation dynamique.
 
 ## Technologies
 
@@ -10,7 +10,7 @@ Bibliotheque d'utilitaires en C pour la gestion de fichiers et la manipulation d
 |-------------|---------|
 | Langage | C99 |
 | Compilateur | GCC 14.2.0 |
-| Bibliotheques | stdio.h, stdlib.h, string.h |
+| Bibliothèques | stdio.h, stdlib.h, string.h |
 | Build | Make |
 
 ## Lancement
@@ -20,7 +20,7 @@ Compiler tous les programmes :
 make compile
 ```
 
-Executer tous les tests :
+Exécuter tous les tests :
 ```
 make run
 ```
@@ -30,7 +30,7 @@ Nettoyer les fichiers objets :
 make clean
 ```
 
-## Fonctionnalites
+## Fonctionnalités
 
 ### Module io_utils
 
@@ -38,7 +38,7 @@ make clean
 |----------|-------------|----------|
 | ouvrir_fichier | Ouvre un fichier avec gestion d'erreur | - |
 | fermer_fichier | Ferme un fichier avec gestion d'erreur | - |
-| verif_et_recup_arg | Valide et recupere un argument CLI | - |
+| verif_et_recup_arg | Valide et récupère un argument CLI | - |
 
 Tests : `bin/ouverture_fichier.exe`, `bin/lecture_fichier.exe`, `bin/ecriture_stdin.exe`
 
@@ -46,10 +46,10 @@ Tests : `bin/ouverture_fichier.exe`, `bin/lecture_fichier.exe`, `bin/ecriture_st
 
 | Fonction | Description | Commande |
 |----------|-------------|----------|
-| calcLength | Calcule la longueur d'une chaine | - |
-| aff | Affiche une chaine sur stdout | - |
-| copieFinChaine | Concatene c1 + c2 | - |
-| copieDebutChaine | Concatene c2 + c1 | - |
-| coupeStr | Extrait une sous-chaine | - |
+| calcLength | Calcule la longueur d'une chaîne | - |
+| aff | Affiche une chaîne sur stdout | - |
+| copieFinChaine | Concatène c1 + c2 | - |
+| copieDebutChaine | Concatène c2 + c1 | - |
+| coupeStr | Extrait une sous-chaîne | - |
 
 Tests : `bin/manipulation_chaines.exe`
