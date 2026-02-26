@@ -40,7 +40,7 @@ static void afficher_resultat(const char *nom_test, int reussi) {
 }
 
 /* =============================================================================
- * Tests
+ * Tests - Cas banal
  * ============================================================================= */
 
 /**
@@ -77,6 +77,46 @@ static void test_verif_recup_arg(void) {
 }
 
 /* =============================================================================
+ * Tests - Cas limites
+ * ============================================================================= */
+
+/**
+ *	Teste la lecture d'un fichier vide.
+ */
+static void test_lecture_fichier_vide(void) {
+	const char *chemin = "test_vide.txt";
+	FILE *fichier = ouvrir_fichier(chemin, "w");
+	fermer_fichier(fichier, chemin);
+
+	fichier = ouvrir_fichier(chemin, "r");
+	char ligne[512];
+	int nombre_lignes = 0;
+
+	while (fgets(ligne, sizeof(ligne), fichier) != NULL) {
+		nombre_lignes++;
+	}
+	fermer_fichier(fichier, chemin);
+
+	int reussi = (nombre_lignes == 0);
+	printf("  -> %d lignes dans fichier vide\n", nombre_lignes);
+	afficher_resultat("lecture fichier vide (0 lignes)", reussi);
+}
+
+/**
+ *	Teste verif_et_recup_arg avec argument court (1 caractere).
+ */
+static void test_verif_recup_arg_court(void) {
+	char buffer[255];
+	char *args_simules[] = {"programme", "a"};
+
+	verif_et_recup_arg(2, args_simules, 2, buffer, sizeof(buffer));
+
+	int reussi = (strcmp(buffer, "a") == 0);
+	printf("  -> argument court recupere : \"%s\"\n", buffer);
+	afficher_resultat("verif_et_recup_arg argument 1 caractere", reussi);
+}
+
+/* =============================================================================
  * Main
  * ============================================================================= */
 
@@ -86,8 +126,13 @@ int main(int argc, char *argv[]) {
 
 	printf("\n=== Tests io_utils : lecture fichier ===\n\n");
 
+	printf("--- Cas banal ---\n");
 	test_lecture_et_comptage();
 	test_verif_recup_arg();
+
+	printf("\n--- Cas limites ---\n");
+	test_lecture_fichier_vide();
+	test_verif_recup_arg_court();
 
 	printf("\n=== Resultat : %d/%d tests reussis ===\n\n", tests_reussis, tests_total);
 	return (tests_reussis == tests_total) ? 0 : 1;

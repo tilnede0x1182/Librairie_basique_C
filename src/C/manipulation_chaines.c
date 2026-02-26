@@ -41,26 +41,56 @@ static void afficher_resultat(const char *nom_test, int reussi) {
 }
 
 /* =============================================================================
- * Tests - calcLength
+ * Tests - calcLength cas banal
  * ============================================================================= */
 
 /**
- *	Teste calcLength avec differents cas.
+ *	Teste calcLength avec chaine normale.
  */
-static void test_calcLength(void) {
-	int ok1 = (calcLength("hello") == 5);
-	int ok2 = (calcLength("") == 0);
-	int ok3 = (calcLength(NULL) == 0);
-	int ok4 = (calcLength("a") == 1);
-
-	afficher_resultat("calcLength chaine normale", ok1);
-	afficher_resultat("calcLength chaine vide", ok2);
-	afficher_resultat("calcLength NULL", ok3);
-	afficher_resultat("calcLength un caractere", ok4);
+static void test_calcLength_normal(void) {
+	int ok = (calcLength("hello") == 5);
+	afficher_resultat("calcLength chaine normale", ok);
 }
 
 /* =============================================================================
- * Tests - copieFinChaine / copieDebutChaine
+ * Tests - calcLength cas limites
+ * ============================================================================= */
+
+/**
+ *	Teste calcLength avec chaine vide.
+ */
+static void test_calcLength_vide(void) {
+	int ok = (calcLength("") == 0);
+	afficher_resultat("calcLength chaine vide", ok);
+}
+
+/**
+ *	Teste calcLength avec NULL.
+ */
+static void test_calcLength_null(void) {
+	int ok = (calcLength(NULL) == 0);
+	afficher_resultat("calcLength NULL", ok);
+}
+
+/**
+ *	Teste calcLength avec un seul caractere.
+ */
+static void test_calcLength_un_char(void) {
+	int ok = (calcLength("a") == 1);
+	afficher_resultat("calcLength un caractere", ok);
+}
+
+/**
+ *	Teste calcLength avec caracteres speciaux.
+ */
+static void test_calcLength_speciaux(void) {
+	int ok = (calcLength("é") >= 1);
+	printf("  -> calcLength(\"e\") = %zu\n", calcLength("é"));
+	afficher_resultat("calcLength caractere accentue", ok);
+}
+
+/* =============================================================================
+ * Tests - copieFinChaine / copieDebutChaine cas banal
  * ============================================================================= */
 
 /**
@@ -86,32 +116,96 @@ static void test_copieDebutChaine(void) {
 }
 
 /* =============================================================================
- * Tests - coupeStr
+ * Tests - copieFinChaine cas limites
  * ============================================================================= */
 
 /**
- *	Teste coupeStr avec differents cas.
+ *	Teste copieFinChaine avec chaine vide.
  */
-static void test_coupeStr(void) {
-	char *r1 = coupeStr("abcdefgh", 0, 3);
-	char *r2 = coupeStr("abcdefgh", 2, 5);
-	char *r3 = coupeStr("abcdefgh", 0, 100);
-	char *r4 = coupeStr("abcdefgh", -1, 3);
-
-	int ok1 = (r1 && strcmp(r1, "abc") == 0);
-	int ok2 = (r2 && strcmp(r2, "cde") == 0);
-	int ok3 = (r3 && strcmp(r3, "abcdefgh") == 0);
-	int ok4 = (r4 == NULL);
-
-	printf("  -> coupeStr(\"abcdefgh\", 0, 3) = \"%s\"\n", r1 ? r1 : "NULL");
-	afficher_resultat("coupeStr debut de chaine", ok1);
-	afficher_resultat("coupeStr milieu de chaine", ok2);
-	afficher_resultat("coupeStr fin depasse", ok3);
-	afficher_resultat("coupeStr indice negatif", ok4);
-
+static void test_copieFinChaine_vide(void) {
+	char *r1 = copieFinChaine("", "abc");
+	char *r2 = copieFinChaine("abc", "");
+	int ok = (strcmp(r1, "abc") == 0) && (strcmp(r2, "abc") == 0);
+	afficher_resultat("copieFinChaine avec chaine vide", ok);
 	free(r1);
 	free(r2);
-	free(r3);
+}
+
+/* =============================================================================
+ * Tests - coupeStr cas banal
+ * ============================================================================= */
+
+/**
+ *	Teste coupeStr debut de chaine.
+ */
+static void test_coupeStr_debut(void) {
+	char *resultat = coupeStr("abcdefgh", 0, 3);
+	int ok = (resultat && strcmp(resultat, "abc") == 0);
+	printf("  -> coupeStr(\"abcdefgh\", 0, 3) = \"%s\"\n", resultat ? resultat : "NULL");
+	afficher_resultat("coupeStr debut de chaine", ok);
+	free(resultat);
+}
+
+/**
+ *	Teste coupeStr milieu de chaine.
+ */
+static void test_coupeStr_milieu(void) {
+	char *resultat = coupeStr("abcdefgh", 2, 5);
+	int ok = (resultat && strcmp(resultat, "cde") == 0);
+	afficher_resultat("coupeStr milieu de chaine", ok);
+	free(resultat);
+}
+
+/* =============================================================================
+ * Tests - coupeStr cas limites
+ * ============================================================================= */
+
+/**
+ *	Teste coupeStr avec fin qui depasse.
+ */
+static void test_coupeStr_depasse(void) {
+	char *resultat = coupeStr("abcdefgh", 0, 100);
+	int ok = (resultat && strcmp(resultat, "abcdefgh") == 0);
+	afficher_resultat("coupeStr fin depasse", ok);
+	free(resultat);
+}
+
+/**
+ *	Teste coupeStr avec indice negatif.
+ */
+static void test_coupeStr_negatif(void) {
+	char *resultat = coupeStr("abcdefgh", -1, 3);
+	int ok = (resultat == NULL);
+	afficher_resultat("coupeStr indice negatif -> NULL", ok);
+}
+
+/**
+ *	Teste coupeStr avec NULL.
+ */
+static void test_coupeStr_null(void) {
+	char *resultat = coupeStr(NULL, 0, 3);
+	int ok = (resultat == NULL);
+	afficher_resultat("coupeStr(NULL) -> NULL", ok);
+}
+
+/**
+ *	Teste coupeStr avec debut = fin (chaine vide).
+ */
+static void test_coupeStr_debut_egal_fin(void) {
+	char *resultat = coupeStr("abcdefgh", 3, 3);
+	int ok = (resultat && strcmp(resultat, "") == 0);
+	afficher_resultat("coupeStr debut=fin -> chaine vide", ok);
+	free(resultat);
+}
+
+/**
+ *	Teste coupeStr avec chaine source vide.
+ */
+static void test_coupeStr_source_vide(void) {
+	char *resultat = coupeStr("", 0, 0);
+	int ok = (resultat && strcmp(resultat, "") == 0);
+	afficher_resultat("coupeStr chaine source vide", ok);
+	free(resultat);
 }
 
 /* =============================================================================
@@ -121,12 +215,32 @@ static void test_coupeStr(void) {
 int main(void) {
 	printf("\n=== Tests util_string ===\n\n");
 
-	test_calcLength();
-	printf("\n");
+	printf("--- calcLength cas banal ---\n");
+	test_calcLength_normal();
+
+	printf("\n--- calcLength cas limites ---\n");
+	test_calcLength_vide();
+	test_calcLength_null();
+	test_calcLength_un_char();
+	test_calcLength_speciaux();
+
+	printf("\n--- copie cas banal ---\n");
 	test_copieFinChaine();
 	test_copieDebutChaine();
-	printf("\n");
-	test_coupeStr();
+
+	printf("\n--- copie cas limites ---\n");
+	test_copieFinChaine_vide();
+
+	printf("\n--- coupeStr cas banal ---\n");
+	test_coupeStr_debut();
+	test_coupeStr_milieu();
+
+	printf("\n--- coupeStr cas limites ---\n");
+	test_coupeStr_depasse();
+	test_coupeStr_negatif();
+	test_coupeStr_null();
+	test_coupeStr_debut_egal_fin();
+	test_coupeStr_source_vide();
 
 	printf("\n=== Resultat : %d/%d tests reussis ===\n\n", tests_reussis, tests_total);
 	return (tests_reussis == tests_total) ? 0 : 1;

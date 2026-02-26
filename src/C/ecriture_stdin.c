@@ -61,7 +61,7 @@ static int est_fin(const char *ligne) {
 }
 
 /* =============================================================================
- * Tests
+ * Tests - Cas banal
  * ============================================================================= */
 
 /**
@@ -77,7 +77,6 @@ static void test_ecriture_fichier(void) {
 
 	afficher_resultat("ecriture dans fichier", ecrit);
 
-	/* Verification de la lecture */
 	fichier = ouvrir_fichier(chemin, "r");
 	char buffer[256];
 	char *lu = fgets(buffer, sizeof(buffer), fichier);
@@ -87,18 +86,48 @@ static void test_ecriture_fichier(void) {
 	afficher_resultat("relecture du fichier ecrit", lecture_ok);
 }
 
-/**
- *	Teste la detection du mot-cle FIN.
- */
-static void test_detection_fin(void) {
-	int test1 = est_fin("FIN");
-	int test2 = est_fin("FIN\n");
-	int test3 = !est_fin("FINAL");
-	int test4 = !est_fin("fin");
-	int test5 = !est_fin(NULL);
+/* =============================================================================
+ * Tests - Cas limites detection FIN
+ * ============================================================================= */
 
-	int tous_ok = test1 && test2 && test3 && test4 && test5;
-	afficher_resultat("detection mot-cle FIN", tous_ok);
+/**
+ *	Teste la detection du mot-cle FIN avec differents cas.
+ */
+static void test_detection_fin_banal(void) {
+	int ok = est_fin("FIN") && est_fin("FIN\n");
+	afficher_resultat("detection FIN et FIN\n", ok);
+}
+
+/**
+ *	Teste est_fin avec FIN\r (retour chariot Windows).
+ */
+static void test_detection_fin_retour_chariot(void) {
+	int ok = est_fin("FIN\r");
+	afficher_resultat("detection FIN\r", ok);
+}
+
+/**
+ *	Teste est_fin avec des cas qui ne sont pas FIN.
+ */
+static void test_detection_fin_negatif(void) {
+	int ok = !est_fin("FINAL") && !est_fin("fin") && !est_fin("FI");
+	afficher_resultat("non-detection FINAL, fin, FI", ok);
+}
+
+/**
+ *	Teste est_fin avec NULL.
+ */
+static void test_detection_fin_null(void) {
+	int ok = !est_fin(NULL);
+	afficher_resultat("est_fin(NULL) retourne 0", ok);
+}
+
+/**
+ *	Teste est_fin avec chaine vide.
+ */
+static void test_detection_fin_vide(void) {
+	int ok = !est_fin("");
+	afficher_resultat("est_fin(\"\") retourne 0", ok);
 }
 
 /* =============================================================================
@@ -108,8 +137,15 @@ static void test_detection_fin(void) {
 int main(void) {
 	printf("\n=== Tests io_utils : ecriture fichier ===\n\n");
 
+	printf("--- Cas banal ---\n");
 	test_ecriture_fichier();
-	test_detection_fin();
+	test_detection_fin_banal();
+
+	printf("\n--- Cas limites ---\n");
+	test_detection_fin_retour_chariot();
+	test_detection_fin_negatif();
+	test_detection_fin_null();
+	test_detection_fin_vide();
 
 	printf("\n=== Resultat : %d/%d tests reussis ===\n\n", tests_reussis, tests_total);
 	return (tests_reussis == tests_total) ? 0 : 1;

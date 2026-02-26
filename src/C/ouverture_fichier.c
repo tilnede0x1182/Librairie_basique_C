@@ -39,7 +39,7 @@ static void afficher_resultat(const char *nom_test, int reussi) {
 }
 
 /* =============================================================================
- * Tests
+ * Tests - Cas banal
  * ============================================================================= */
 
 /**
@@ -54,6 +54,35 @@ static void test_ouverture_fichier_existant(void) {
 }
 
 /* =============================================================================
+ * Tests - Cas limites
+ * ============================================================================= */
+
+/**
+ *	Teste fermer_fichier avec NULL (ne doit pas planter).
+ */
+static void test_fermer_fichier_null(void) {
+	fermer_fichier(NULL, "inexistant.txt");
+	afficher_resultat("fermer_fichier avec NULL", 1);
+}
+
+/**
+ *	Teste l'ouverture d'un fichier vide.
+ */
+static void test_ouverture_fichier_vide(void) {
+	const char *chemin = "test_vide.txt";
+	FILE *fichier = ouvrir_fichier(chemin, "w");
+	fermer_fichier(fichier, chemin);
+	
+	fichier = ouvrir_fichier(chemin, "r");
+	char buffer[10];
+	char *ligne = fgets(buffer, sizeof(buffer), fichier);
+	int est_vide = (ligne == NULL);
+	fermer_fichier(fichier, chemin);
+	
+	afficher_resultat("ouverture fichier vide (aucune ligne)", est_vide);
+}
+
+/* =============================================================================
  * Main
  * ============================================================================= */
 
@@ -63,7 +92,12 @@ int main(int argc, char **argv) {
 
 	printf("\n=== Tests io_utils : ouverture/fermeture ===\n\n");
 
+	printf("--- Cas banal ---\n");
 	test_ouverture_fichier_existant();
+
+	printf("\n--- Cas limites ---\n");
+	test_fermer_fichier_null();
+	test_ouverture_fichier_vide();
 
 	printf("\n=== Resultat : %d/%d tests reussis ===\n\n", tests_reussis, tests_total);
 	return (tests_reussis == tests_total) ? 0 : 1;

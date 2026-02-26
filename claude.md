@@ -3,6 +3,10 @@
 .
 ├── A_faire.md
 ├── bin
+│   ├── ecriture_stdin.exe
+│   ├── lecture_fichier.exe
+│   ├── manipulation_chaines.exe
+│   └── ouverture_fichier.exe
 ├── build
 ├── claude.md
 ├── Makefile
@@ -11,19 +15,20 @@
 ├── Sauvegarde.txt
 ├── src
 │   ├── C
-│   │   ├── io_utils.c
-│   │   └── UtilString.c
+│   │   ├── ecriture_stdin.c
+│   │   ├── lecture_fichier.c
+│   │   ├── manipulation_chaines.c
+│   │   ├── ouverture_fichier.c
+│   │   └── Utilitaire
+│   │       ├── io_utils.c
+│   │       └── UtilString.c
 │   └── Headers
-│       ├── io_utils.h
-│       └── util_string.h
-└── tests
-    ├── Test1.1.c
-    ├── Test1.2.c
-    ├── Test1.c
-    ├── Test2.c
-    └── tests.js
+│       └── Utilitaire
+│           ├── io_utils.h
+│           └── util_string.h
+└── test_ecriture.txt
 
-7 directories, 15 files
+8 directories, 19 files
 
 A faire :
 

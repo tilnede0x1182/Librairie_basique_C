@@ -1,39 +1,55 @@
-# Utilitaires C – Lecture/Écriture et Manipulation de Chaînes de charactère
+# Utilitaires C - Fichiers et Chaines
 
 ## Description
-Ce projet regroupe plusieurs petits programmes en C destinés à illustrer la lecture et l’écriture de fichiers, ainsi que des fonctions de manipulation de chaînes.
-Chaque programme (`Test1.1.c`, `Test1.2.c`, `Test1.c`) montre un cas d’usage simple : compter et afficher les lignes d’un fichier, copier l’entrée standard dans un fichier de résultat, ou tester l’ouverture d’un fichier.
-Un module de traitement de chaînes (`Test2.c`, `UtilString.c`) fournit des fonctions pour calculer la longueur, afficher, concaténer et extraire des sous-chaînes.
-L’ensemble illustre des bases de la programmation systèmes en C, avec gestion d’erreurs et allocation dynamique.
 
-## Technologies et environnements
-- **Langage :** C (norme C99/C11 compatible)
-- **Compilateur :** GCC ≥ 4.8 (ou tout compilateur compatible C99)
-- **Bibliothèques :** standard C (`stdio.h`, `stdlib.h`, `string.h`)
-- **Système de fichiers :** POSIX/ANSI C (ouverture, lecture, écriture et fermeture via `fopen`, `fgets`, `fputs`, `fclose`)
+Bibliotheque d'utilitaires en C pour la gestion de fichiers et la manipulation de chaines de caracteres. Le module io_utils fournit des fonctions d'ouverture/fermeture de fichiers et de recuperation d'arguments CLI. Le module util_string propose des fonctions de calcul de longueur, affichage, concatenation et extraction de sous-chaines. Chaque fonction inclut une gestion d'erreurs et utilise l'allocation dynamique.
 
-## Fonctionnalités
-- **Test1.1.c**
-  - Vérification du nombre d’arguments et affichage d’un message d’usage
-  - Ouverture en lecture d’un fichier dont le nom est passé en argument
-  - Lecture ligne par ligne, affichage sur la sortie standard et comptage des lignes
-  - Fermeture sécurisée du fichier avec gestion d’erreur
+## Technologies
 
-- **Test1.2.c**
-  - Ouverture en écriture de `resultat.txt` (crée ou écrase)
-  - Lecture de l’entrée standard jusqu’à la ligne `FIN\n` et écriture progressive dans le fichier
-  - Fermeture du fichier avec message de confirmation
+| Technologie | Version |
+|-------------|---------|
+| Langage | C99 |
+| Compilateur | GCC 14.2.0 |
+| Bibliotheques | stdio.h, stdlib.h, string.h |
+| Build | Make |
 
-- **Test1.c**
-  - Démonstration minimale d’ouverture de fichier en mode lecture (fichier `Sauvegarde`)
-  - Gestion basique d’erreur d’ouverture
+## Lancement
 
-- **Test2.c** et **UtilString.c**
-  - `calcLength(char *)` : calcule la longueur d’une chaîne (équivalent à `strlen`)
-  - `aff(char *)` : affiche caractère par caractère puis un saut de ligne
-  - `verif_et_recup_arg(...)` : extrait un argument de ligne de commande après vérification
-  - `copieFinChaine(c1, c2, dest)` : concatène `c1` puis `c2` dans une nouvelle zone allouée
-  - `copieDebutChaine(c1, c2, dest)` : idem, ordre inversé
-  - `coupeStr(src, dest, x, y)` : copie la sous-chaîne `src[x..y-1]` dans `dest`
+Compiler tous les programmes :
+```
+make compile
+```
 
-Chaque composant inclut une gestion simple des erreurs (vérification de retour de `fopen`, `fclose`, `malloc`) et illustre les principes de base de la manipulation de flux et de chaînes en C.
+Executer tous les tests :
+```
+make run
+```
+
+Nettoyer les fichiers objets :
+```
+make clean
+```
+
+## Fonctionnalites
+
+### Module io_utils
+
+| Fonction | Description | Commande |
+|----------|-------------|----------|
+| ouvrir_fichier | Ouvre un fichier avec gestion d'erreur | - |
+| fermer_fichier | Ferme un fichier avec gestion d'erreur | - |
+| verif_et_recup_arg | Valide et recupere un argument CLI | - |
+
+Tests : `bin/ouverture_fichier.exe`, `bin/lecture_fichier.exe`, `bin/ecriture_stdin.exe`
+
+### Module util_string
+
+| Fonction | Description | Commande |
+|----------|-------------|----------|
+| calcLength | Calcule la longueur d'une chaine | - |
+| aff | Affiche une chaine sur stdout | - |
+| copieFinChaine | Concatene c1 + c2 | - |
+| copieDebutChaine | Concatene c2 + c1 | - |
+| coupeStr | Extrait une sous-chaine | - |
+
+Tests : `bin/manipulation_chaines.exe`
