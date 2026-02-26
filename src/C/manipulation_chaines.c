@@ -209,39 +209,57 @@ static void test_coupeStr_source_vide(void) {
 }
 
 /* =============================================================================
- * Main
+ * Fonctions de regroupement des tests
  * ============================================================================= */
 
-int main(void) {
-	printf("\n=== Tests util_string ===\n\n");
-
+/**
+ *	Execute tous les tests de calcLength.
+ */
+static void executer_tests_calcLength(void) {
 	printf("--- calcLength cas banal ---\n");
 	test_calcLength_normal();
-
 	printf("\n--- calcLength cas limites ---\n");
 	test_calcLength_vide();
 	test_calcLength_null();
 	test_calcLength_un_char();
 	test_calcLength_speciaux();
+}
 
+/**
+ *	Execute tous les tests de copie.
+ */
+static void executer_tests_copie(void) {
 	printf("\n--- copie cas banal ---\n");
 	test_copieFinChaine();
 	test_copieDebutChaine();
-
 	printf("\n--- copie cas limites ---\n");
 	test_copieFinChaine_vide();
+}
 
+/**
+ *	Execute tous les tests de coupeStr.
+ */
+static void executer_tests_coupeStr(void) {
 	printf("\n--- coupeStr cas banal ---\n");
 	test_coupeStr_debut();
 	test_coupeStr_milieu();
-
 	printf("\n--- coupeStr cas limites ---\n");
 	test_coupeStr_depasse();
 	test_coupeStr_negatif();
 	test_coupeStr_null();
 	test_coupeStr_debut_egal_fin();
 	test_coupeStr_source_vide();
+}
 
+/* =============================================================================
+ * Main
+ * ============================================================================= */
+
+int main(void) {
+	printf("\n=== Tests util_string ===\n\n");
+	executer_tests_calcLength();
+	executer_tests_copie();
+	executer_tests_coupeStr();
 	printf("\n=== Resultat : %d/%d tests reussis ===\n\n", tests_reussis, tests_total);
 	return (tests_reussis == tests_total) ? 0 : 1;
 }
