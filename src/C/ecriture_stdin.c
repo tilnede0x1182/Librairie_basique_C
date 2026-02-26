@@ -68,7 +68,7 @@ static int est_fin(const char *ligne) {
  *	Teste l'ecriture dans un fichier.
  */
 static void test_ecriture_fichier(void) {
-	const char *chemin = "test_ecriture.txt";
+	const char *chemin = "tests/outputs/test_ecriture.txt";
 	const char *contenu = "Ligne de test\n";
 
 	FILE *fichier = ouvrir_fichier(chemin, "w");

@@ -46,7 +46,7 @@ static void afficher_resultat(const char *nom_test, int reussi) {
  *	Teste l'ouverture et fermeture d'un fichier existant.
  */
 static void test_ouverture_fichier_existant(void) {
-	const char *chemin = "Sauvegarde.txt";
+	const char *chemin = "tests/utilitaire_tests/Sauvegarde.txt";
 	FILE *fichier = ouvrir_fichier(chemin, "r");
 	int ouvert = (fichier != NULL);
 	fermer_fichier(fichier, chemin);
@@ -69,7 +69,7 @@ static void test_fermer_fichier_null(void) {
  *	Teste l'ouverture d'un fichier vide.
  */
 static void test_ouverture_fichier_vide(void) {
-	const char *chemin = "test_vide.txt";
+	const char *chemin = "tests/outputs/test_vide.txt";
 	FILE *fichier = ouvrir_fichier(chemin, "w");
 	fermer_fichier(fichier, chemin);
 	

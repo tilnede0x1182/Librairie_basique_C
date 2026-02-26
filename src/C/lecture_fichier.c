@@ -47,7 +47,7 @@ static void afficher_resultat(const char *nom_test, int reussi) {
  *	Teste la lecture d'un fichier et le comptage de lignes.
  */
 static void test_lecture_et_comptage(void) {
-	const char *chemin = "Sauvegarde.txt";
+	const char *chemin = "tests/utilitaire_tests/Sauvegarde.txt";
 	FILE *fichier = ouvrir_fichier(chemin, "r");
 	char ligne[512];
 	int nombre_lignes = 0;
@@ -84,7 +84,7 @@ static void test_verif_recup_arg(void) {
  *	Teste la lecture d'un fichier vide.
  */
 static void test_lecture_fichier_vide(void) {
-	const char *chemin = "test_vide.txt";
+	const char *chemin = "tests/outputs/test_vide.txt";
 	FILE *fichier = ouvrir_fichier(chemin, "w");
 	fermer_fichier(fichier, chemin);
 
